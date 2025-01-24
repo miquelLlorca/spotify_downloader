@@ -1,8 +1,8 @@
 Comments:
     ☐ Uses 'To Do tasks' extension
     ☐ Create task with ctrl+Enter
-    ☐ Open/close tasks with alt+D
-
+    ✔ Open/close tasks with alt+D @done (1/24/2025, 2:52:48 PM)
+    ✘ Cancel with Alt+c @cancelled (1/24/2025, 2:52:39 PM)
 
 Management:
     ✔ Create new repo and move all code with commit history @high @done (1/24/2025, 1:26:28 PM)
@@ -32,7 +32,7 @@ Coding:
         ☐ Check/improve error management for pages
         ☐ Check way for not wasting Spotify calls
     Scripts:
-        ☐ Implement downloader with notube
+        ✘ Implement downloader with notube @cancelled (1/24/2025, 2:52:58 PM) # Asks for captcha, discarded
     Statistics:
         ☐ Histogram for artists (depends of data tasks)
         ☐ Histogram for genres (depends of data tasks)

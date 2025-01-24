@@ -26,14 +26,11 @@ def download_playlist(path, webpage):
 
 
 def download_with_notube(path):
-    print('holi')
     chrome_options = Options()
     chrome_options.add_argument("--ignore-certificate-errors")  # Ignore SSL certificate errors
     chrome_options.add_argument("--disable-web-security")       # Disable security checks
     chrome_options.add_argument("--disable-infobars")           # Suppress infobars (if applicable)
     # chrome_options.add_argument("--headless")                   # Optional: No GUI if headless mode is needed
-
-    # Set up ChromeDriver
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
     df = pd.read_csv(path, encoding='ISO-8859-1', sep=';')
@@ -43,40 +40,49 @@ def download_with_notube(path):
         
     try:
         driver.get("https://notube.si/es/youtube-app-57")
+        
+        # Sets the type of conversion
+        type_dropdown = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.ID, "myDropdown"))
+        )
+        type_dropdown.click()
+        type_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, "//option[@value='mp3hd']"))
+        )
+        type_button.click()
 
         for i, row in df.iterrows():
-            # 1. Look for the textbox
-            textbox = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "video")))
-            print(type(row['YouTube_URL']), row['downloaded'])
             if(type(row['YouTube_URL'])==str and not row['downloaded']):
+                # 1. Look for the textbox
                 print(f'Downloading {row["name"]}')
+                textbox = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "keyword")))
+                
                 # 2. Write some data
                 textbox.send_keys(row['YouTube_URL'])
 
                 # 3. Click on convert button
                 convert_button = WebDriverWait(driver, 10).until(
-                    EC.element_to_be_clickable((By.XPATH, "//button[text()='Convert']"))
+                    EC.element_to_be_clickable((By.ID, "submit-button"))
                 )
                 convert_button.click()
 
                 # 4. Wait for download button to appear and click it
                 dowload_button = WebDriverWait(driver, 60).until(
-                    EC.element_to_be_clickable((By.XPATH, "//button[text()='Download']"))
+                    EC.element_to_be_clickable((By.ID, "downloadButton"))
                 )
                 dowload_button.click()
                 
                 # 5. Sleep for a bit so downloads have time to finish
-                time.sleep(2)
                 df.at[i, 'downloaded'] = True
                 df.to_csv(path, index=False, sep=';')
                 print(f'Downloaded {i} - {row["YouTube_Title"]}')
+                time.sleep(2000)
                 
                 # 6. Click on next to continue donwloading
                 next_button = WebDriverWait(driver, 10).until(
-                    EC.element_to_be_clickable((By.XPATH, "//button[text()='Next']"))
+                    EC.element_to_be_clickable((By.XPATH, "//button[text()='Convertir otro vídeo']"))
                 )
-                next_button.click()
-                
+                next_button.click()   
     finally:
         df.to_csv(path, index=False, sep=';')
         driver.quit()
@@ -88,8 +94,6 @@ def download_with_y2mate(path):
     chrome_options.add_argument("--disable-web-security")       # Disable security checks
     chrome_options.add_argument("--disable-infobars")           # Suppress infobars (if applicable)
     # chrome_options.add_argument("--headless")                   # Optional: No GUI if headless mode is needed
-
-    # Set up ChromeDriver
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
     df = pd.read_csv(path, encoding='ISO-8859-1', sep=';')
@@ -101,11 +105,11 @@ def download_with_y2mate(path):
         driver.get("https://y2mate.nu/en-efXo/")
 
         for i, row in df.iterrows():
-            # 1. Look for the textbox
-            textbox = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "video")))
-            print(type(row['YouTube_URL']), row['downloaded'])
+
             if(type(row['YouTube_URL'])==str and not row['downloaded']):
                 print(f'Downloading {row["name"]}')
+                # 1. Look for the textbox
+                textbox = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "video")))
                 # 2. Write some data
                 textbox.send_keys(row['YouTube_URL'])
 
@@ -132,7 +136,8 @@ def download_with_y2mate(path):
                     EC.element_to_be_clickable((By.XPATH, "//button[text()='Next']"))
                 )
                 next_button.click()
-                
+            else:
+                print('Already downloaded...')
     finally:
         df.to_csv(path, index=False, sep=';')
         driver.quit()
@@ -141,6 +146,7 @@ def download_with_y2mate(path):
 if(__name__=='__main__'):
     parser = argparse.ArgumentParser(description="Scraper script.")
     parser.add_argument("--path", type=str, required=True, help="Path to playlist")
+    parser.add_argument("--webpage", type=str, required=True, help="Which web to use.")
     args = parser.parse_args()
 
-    download_playlist(args.path)
+    download_playlist(args.path, args.webpage)
