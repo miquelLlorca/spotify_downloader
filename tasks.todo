@@ -1,0 +1,45 @@
+Comments:
+    ☐ Uses 'To Do tasks' extension
+    ☐ Create task with ctrl+Enter
+    ☐ Open/close tasks with alt+D
+
+
+Management:
+    ☐ Create new repo and move all code with commit history @high
+    ☐ Get playlist data again with new string cleaning
+    ☐ Download music
+
+Documentation:
+    ✔ Add requirements @done (1/24/2025, 1:07:19 PM)
+    Add readmes:
+        ☐ Add general readme
+        ☐ Add readme to scripts
+        ☐ Add readme to pages
+    Document functions:
+        ☐ Add documentation to scripts
+        ☐ Add documentation to pages
+
+
+Data:
+    ☐ Check data treatment consistency @high
+    ☐ Improve cleaning of strings @high 
+
+
+Coding:
+    Error management:
+        ☐ Check/improve error management for scripts
+        ☐ Check/improve error management for pages
+        ☐ Check way for not wasting Spotify calls
+    Scripts:
+        ☐ Implement downloader with notube
+    Statistics:
+        ☐ Histogram for artists (depends of data tasks)
+        ☐ Histogram for genres (depends of data tasks)
+        ☐ Duration stats with total time, histogram and median
+
+
+    MP3 Player:
+        Investigate best way to implement it:
+            ☐ Integrated in streamlit
+            ☐ Using VLC
+            ☐ Using pygame
