@@ -32,12 +32,12 @@ Coding:
         ☐ Check/improve error management for pages
         ☐ Check way for not wasting Spotify calls
     Scripts:
-        ✘ Implement downloader with notube @cancelled (1/24/2025, 2:52:58 PM) # Asks for captcha, discarded
+        ✘ Implement downloader with notube @cancelled (1/24/2025, 3:54:43 PM)
     Statistics:
         ☐ Histogram for artists (depends of data tasks)
         ☐ Histogram for genres (depends of data tasks)
-        ☐ Duration stats with total time, histogram and median
-
+        ✔ Duration stats with total time, histogram and median @done (1/24/2025, 3:54:26 PM)
+        ✔ Release date histogram @done (1/24/2025, 3:54:26 PM)
 
     MP3 Player:
         Investigate best way to implement it:

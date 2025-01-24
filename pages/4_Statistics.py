@@ -12,33 +12,6 @@ import os
 from collections import Counter
 import plotly.express as px
 
-def save_genre_histogram(df, filename='genre_histogram_horizontal.png', dpi=600):
-    # Flatten the list of genres
-    all_genres = [genre for genres_list in df['genres'] for genre in genres_list.split()]
-
-    # Count occurrences of each genre
-    genre_counts = Counter(all_genres)
-
-    # Create the DataFrame for plotting
-    genre_df = pd.DataFrame(genre_counts.items(), columns=['Genre', 'Count'])
-
-    # Sort genres by frequency
-    genre_df = genre_df.sort_values(by='Count', ascending=False)
-
-    # Plot the horizontal bar chart
-    plt.figure(figsize=(12, 50))  # Tall figure for better readability
-    plt.barh(genre_df['Genre'], genre_df['Count'], color='skyblue')
-    plt.xlabel('Frequency')
-    plt.ylabel('Genres')
-    plt.title('Genre Distribution in Playlist')
-    plt.tight_layout(pad=2.0)  # Add extra padding
-    plt.gca().invert_yaxis()  # Flip genres to start from the most frequent
-
-    # Save the plot to a file
-    plt.savefig(filename, dpi=dpi)
-    print(f"Histogram saved to {filename}")
-
-
 
 def flatten_genres(df):
     all_lists = df['genres']
@@ -48,7 +21,6 @@ def flatten_genres(df):
         if(type(genre_list)==float):
             pass
         else:
-
             print(genre_list, end='')
             genre_list = genre_list.replace("'","").replace("[","").replace("]","")
             if(',' in genre_list):
@@ -68,7 +40,6 @@ def flatten_artists(df):
         if(type(genre_list)==float):
             pass
         else:
-
             print(genre_list, end='')
             genre_list = genre_list.replace("'","").replace("[","").replace("]","")
             if(',' in genre_list):
@@ -82,15 +53,12 @@ def flatten_artists(df):
 
 
 def plot_genre_histogram(df):
-    
     genre_counts = Counter(flatten_genres(df))
 
     # Create the DataFrame for plotting
     genre_df = pd.DataFrame(genre_counts.items(), columns=['Genre', 'Count'])
-
     # Sort genres by frequency
     genre_df = genre_df.sort_values(by='Count', ascending=False)
-
     # Create the Plotly horizontal bar chart
     fig = px.bar(
         genre_df,
@@ -107,12 +75,7 @@ def plot_genre_histogram(df):
         height=1000,  # Adjust height for better readability
         margin=dict(l=150, r=50, t=50, b=50)  # Add padding for better visibility
     )
-
     return fig
-
-
-
-
 
 def plot_popularity_histogram(df):
     # Create a histogram for the 'popularity' column
@@ -122,7 +85,7 @@ def plot_popularity_histogram(df):
         nbins=20,  # Adjust the number of bins as needed
         title='Distribution of Song Popularity',
         labels={'popularity': 'Popularity'},
-        color_discrete_sequence=['skyblue']  # Customize color
+        color_discrete_sequence=['lightgreen']  # Customize color
     )
     fig.update_layout(
         xaxis_title='Popularity Score',
@@ -140,21 +103,67 @@ def plot_popularity_histogram(df):
     )
     return fig
 
+def plot_duration_histogram(df):
+    # Create a histogram for the 'popularity' column
+    fig = px.histogram(
+        df,
+        x='duration_mins',
+        nbins=20,  # Adjust the number of bins as needed
+        title='Distribution of Song Duration in minutes',
+        labels={'duration': 'Duration'},
+        color_discrete_sequence=['skyblue']  # Customize color
+    )
+    fig.update_layout(
+        xaxis_title='Duration in minutes',
+        yaxis_title='Number of Songs',
+        margin=dict(l=50, r=50, t=50, b=50)
+    )
+    median_popularity = df['duration_mins'].median()
+    fig.add_vline(
+        x=median_popularity,
+        line_dash="dash",  # Dashed line for the median
+        line_color="red",
+        annotation_text=f"Median: {median_popularity:.1f}",  # Display the median value
+        annotation_position="top right"
+    )
+    return fig
 
+def plot_release_year_histogram(df):
+    # Extract the release year
+    df['release_year'] = pd.to_datetime(df['release_date'], format='mixed', errors='coerce').dt.year
 
+    # Create the histogram
+    fig = px.histogram(
+        df,
+        x='release_year',
+        nbins=40,  # Adjust the number of bins as needed
+        title='Distribution of Song Release Years',
+        labels={'release_year': 'Release Year'},
+        color_discrete_sequence=['lightgreen']
+    )
+
+    # Update layout with titles and margins
+    fig.update_layout(
+        xaxis_title='Release Year',
+        yaxis_title='Number of Songs',
+        margin=dict(l=50, r=50, t=50, b=50)
+    )
+
+    return fig
 
 ###################################################################################################################################################################
 ###################################################################################################################################################################
 ###################################################################################################################################################################
-# TODO: change to plotly, create popularity histogram, top artists, release date histogram, length histogram
+
 ALL = 'All of them'
 
 playlist_name = st.selectbox('Select a playlist', [ALL]+[file for file in os.listdir('data/') if file.endswith('.csv')])
 df = st.session_state.get('df')
-if(df is None):
+if(st.button('Load data')):
     if(playlist_name == ALL):
         paths = [f'data/{file}' for file in os.listdir('data/') if file.endswith('.csv')]
         dfs = []#[pd.read_csv(path, sep=';') for path in paths]
+        print(paths)
         for path in paths:
             print(path)
             dfs.append(pd.read_csv(path, sep=';'))
@@ -164,19 +173,41 @@ if(df is None):
         path = f'data/{playlist_name}'
         df = pd.read_csv(path, sep=';')
         st.session_state.df = df
+    
+    df['duration_mins'] = df['duration_ms'].apply(lambda x: round(x/1000/60,4))
+    print('Data loaded')
+
 
 if(df is not None):
-    # fig = plot_genre_histogram(df)
-    # st.plotly_chart(fig)
-
     n = len(df)
     genres = np.unique(np.array(flatten_genres(df)))
     artists = np.unique(np.array(flatten_artists(df)))
     st.text(f'{n} songs in your playlists. With {len(artists)} artists and {len(genres)} genres')
-    fig = plot_popularity_histogram(df)
-    st.plotly_chart(fig)
+    
+    
+    # GRAPHS
+    
+    # st.plotly_chart(plot_top_artist_histogram(df))
+    # st.text('')
+    # st.text('')
 
-    # TODO: add total time, time hist with median
+    # st.plotly_chart(plot_top_genre_histogram(df))
+    # st.text('')
+    # st.text('')
+
+    st.plotly_chart(plot_popularity_histogram(df))
+    st.text('')
+    st.text('')
+
+    st.plotly_chart(plot_duration_histogram(df))
+    st.text(f'Total time of {round(np.sum(df["duration_mins"])/60,2)} hours')
+    st.text('')
+    st.text('')
+
+    st.plotly_chart(plot_release_year_histogram(df))
+    st.text('')
+    st.text('')
+
 
 
 
