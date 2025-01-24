@@ -5,7 +5,8 @@ Comments:
 
 
 Management:
-    ☐ Create new repo and move all code with commit history @high
+    ✔ Create new repo and move all code with commit history @high @done (1/24/2025, 1:26:28 PM)
+    ✔ Add gitignore @done (1/24/2025, 1:26:30 PM)
     ☐ Get playlist data again with new string cleaning
     ☐ Download music
 
