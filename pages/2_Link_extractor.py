@@ -9,6 +9,7 @@ from collections import Counter
 import streamlit as st
 import os
 import subprocess
+import data
 
 API = 'API'
 SCRAPER = 'SCRAPER'
@@ -94,7 +95,7 @@ if(method==SCRAPER):
 if(st.button('Get links')):
     path = f'data/{playlist_name}'
     if(method==API):
-        df = create_youtube_playlist_from_spotify(pd.read_csv(path, sep=';'), api_key, method)
+        df = create_youtube_playlist_from_spotify(data.read_as_df(path) ,api_key, method)
         df.to_csv(path, index=False, sep=';')
     elif(method==SCRAPER):
         with st.spinner("Launching scraper..."):

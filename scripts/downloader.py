@@ -16,6 +16,7 @@ import pandas as pd
 import numpy as np
 
 import argparse
+import data
 
 def download_playlist(path, webpage):
     if(webpage=='notube'):
@@ -33,7 +34,7 @@ def download_with_notube(path):
     # chrome_options.add_argument("--headless")                   # Optional: No GUI if headless mode is needed
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
-    df = pd.read_csv(path, encoding='ISO-8859-1', sep=';')
+    df = data.read_as_df(path)
 
     if('downloaded' not in df.columns):
         df['downloaded'] = [False for i in range(len(df))]
@@ -74,7 +75,7 @@ def download_with_notube(path):
                 
                 # 5. Sleep for a bit so downloads have time to finish
                 df.at[i, 'downloaded'] = True
-                df.to_csv(path, index=False, sep=';')
+                data.save_df(df, path)
                 print(f'Downloaded {i} - {row["YouTube_Title"]}')
                 time.sleep(2000)
                 
@@ -84,7 +85,7 @@ def download_with_notube(path):
                 )
                 next_button.click()   
     finally:
-        df.to_csv(path, index=False, sep=';')
+        data.save_df(df, path)
         driver.quit()
 
 
@@ -96,7 +97,7 @@ def download_with_y2mate(path):
     # chrome_options.add_argument("--headless")                   # Optional: No GUI if headless mode is needed
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
-    df = pd.read_csv(path, encoding='ISO-8859-1', sep=';')
+    df = data.read_as_df(path)
 
     if('downloaded' not in df.columns):
         df['downloaded'] = [False for i in range(len(df))]
@@ -128,7 +129,7 @@ def download_with_y2mate(path):
                 # 5. Sleep for a bit so downloads have time to finish
                 time.sleep(2)
                 df.at[i, 'downloaded'] = True
-                df.to_csv(path, index=False, sep=';')
+                data.save_df(df, path)
                 print(f'Downloaded {i} - {row["YouTube_Title"]}')
                 
                 # 6. Click on next to continue donwloading
@@ -139,7 +140,7 @@ def download_with_y2mate(path):
             else:
                 print('Already downloaded...')
     finally:
-        df.to_csv(path, index=False, sep=';')
+        data.save_df(df, path)
         driver.quit()
 
 

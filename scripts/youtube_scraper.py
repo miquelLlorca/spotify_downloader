@@ -16,7 +16,7 @@ import pandas as pd
 import numpy as np
 
 import argparse
-
+import data
 
 
 def create_youtube_playlist(path):
@@ -29,7 +29,7 @@ def create_youtube_playlist(path):
     # Set up ChromeDriver
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
-    df = pd.read_csv(path, encoding='ISO-8859-1', sep=';')
+    df = data.read_as_df(path)
     youtube_titles = []
     youtube_urls = []
 
@@ -81,7 +81,7 @@ def create_youtube_playlist(path):
         df['YouTube_Title'] = youtube_titles
         df['YouTube_URL'] = youtube_urls
 
-        df.to_csv(path, index=False, sep=';')
+        data.save_df(df, path)
     finally:
         driver.quit()
 

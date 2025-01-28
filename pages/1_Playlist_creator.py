@@ -1,37 +1,21 @@
 import spotipy
-from spotipy.oauth2 import SpotifyClientCredentials, SpotifyOAuth
+from spotipy.oauth2 import SpotifyOAuth
 import pandas as pd
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
-import numpy as np
-import matplotlib.pyplot as plt
-from collections import Counter
 import os
 import streamlit as st
 import shutil
-from datetime import datetime, timedelta
-import unicodedata
-import re
-
-def check_too_old(path):
-    file_stats = os.stat(path)
-    last_modified = datetime.fromtimestamp(file_stats.st_mtime)
-    return (datetime.now() - last_modified) >= timedelta(days=1)
-
-def correct_date_format(date):
-    if(type(date) != str):
-        date = str(date)
-    if(len(date) == 4):  # If the date is only the year (e.g., '2022')
-        return date + '-01-01'  # Add '-01-01' to make it a full date
-    return date  # Otherwise, return the original date
-
+from datetime import datetime
+import data
 
 
 def get_playlist_data(sp, playlist_id, filename):
+    ''' Uses the spotify API to get all data from a playlist.
+        If the data is already available locally it skips the call.'''
+    
     raw_data_path = f'data/spotify_raw/{filename}'
-    if(os.path.exists(raw_data_path) and not check_too_old(raw_data_path)):
-        st.text('Data already downloaded, skipping API cal...')
-        return pd.read_csv(raw_data_path, sep=';')
+    if(os.path.exists(raw_data_path) and not data.check_too_old(raw_data_path)):
+        st.text('Data already downloaded, skipping API call...')
+        return data.read_as_df(raw_data_path)
     
     # if the file does not exist or is older it gets the data again
     all_tracks = []
@@ -48,7 +32,7 @@ def get_playlist_data(sp, playlist_id, filename):
             st.text(f'Gotten first {offset+len(items)} songs!')
             for item in items:
                 track = item['track']
-                if track:  # Check if track is not None
+                if(track):  # Check if track is not None
                     # Fetch artist genres
                     artist_ids = [artist['id'] for artist in track['artists']]
                     genres = []
@@ -73,25 +57,10 @@ def get_playlist_data(sp, playlist_id, filename):
             break
 
     df = pd.DataFrame(all_tracks)
-    df.to_csv(raw_data_path, sep=';', index=False)
+    data.save_df(df, raw_data_path)
     return df
 
-def clean_genres(genres):
-    if(type(genres)==list):
-        genres = str(genres)
-    if(type(genres)==str):
-        return genres.replace('"','').replace("'",'').replace('[', '').replace(']', '')
-    return genres
 
-def clean_data(data):
-    if(type(data)!=str):
-        data = str(data)
-    normalized = unicodedata.normalize('NFKD', data)
-    # Remove diacritical marks (e.g., accents, umlauts)
-    without_accents = ''.join(c for c in normalized if not unicodedata.combining(c))
-    # Remove other "weird" characters (non-alphanumeric, except spaces, dashes, and underscores)
-    cleaned = re.sub(r'[^a-zA-Z0-9 _,-]', '', without_accents)
-    return cleaned.strip()
 
 st.set_page_config(layout="wide")
 st.title("Playlist creator")
@@ -119,49 +88,48 @@ if(st.button('Create or update playlist')):
     path = f'data/{filename}'
     if(os.path.exists(path)):
         st.text('Updating playlist data...')
-        shutil.copy(path, f'data/backups/{playlist_name}-{playlist_id}-{datetime.now().strftime("%m-%d_%H-%M-%S")}.csv')
-        df = pd.read_csv(path, sep=';')
+        data.create_backup(path, playlist_name, playlist_id)
+        df = data.read_as_df(path)
         updated_df = get_playlist_data(sp, playlist_id, filename)
+
         df.drop(columns=['genres', 'name', 'artist', 'album'], errors='ignore', inplace=True)
         updated_df['popularity'] = updated_df['popularity'].astype(float)
-        # df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce')
-        df['release_date'] = df['release_date'].apply(correct_date_format)
-        df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce', dayfirst=True)
+        
+        df['release_date'] = df['release_date'].apply(data.correct_date_format)
+        df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce')
+        updated_df['release_date'] = updated_df['release_date'].apply(data.correct_date_format)
         updated_df['release_date'] = pd.to_datetime(updated_df['release_date'], errors='coerce')
+
         df = pd.merge(updated_df, df, on=['release_date', 'duration_ms', 'popularity'], how='left')
     else:
         st.text('Creating new playlist...')
         df = get_playlist_data(sp, playlist_id, filename)
+        df['release_date'] = df['release_date'].apply(data.correct_date_format)
+        df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce')
     st.session_state.df = df
 
 
 if(st.session_state.get('df') is not None):
     if(len(df)>0):
-        columns = df.columns
-            
         # If columns already exist they should be kept
-        if('YouTube_Title' not in columns):
+        if('YouTube_Title' not in df.columns):
             df['YouTube_Title'] = [None for i in range(len(df))]
-        if('YouTube_URL' not in columns):
+        if('YouTube_URL' not in df.columns):
             df['YouTube_URL'] = [None for i in range(len(df))]
-        if('downloaded' not in columns):
+        if('downloaded' not in df.columns):
             df['downloaded'] = [False for i in range(len(df))]
 
         # Cleans the data
         st.text('Cleaning data...')
-        # if('genres' in columns):
-        #     df['genres'] = df['genres'].apply(clean_genres)
-        #     df['genres'] = df['genres'].apply(clean_data)
-
         columns_to_clean = ['artist', 'name', 'album', 'genres']
         for col in columns_to_clean:
-            df[col] = df[col].apply(clean_data)
+            df[col] = df[col].apply(data.clean_data)
             
         st.session_state.df = df
         st.dataframe(st.session_state.df)
         path = f'data/{playlist_name}-{playlist_id}.csv'
         if(st.button('Save playlist')):
-            df.to_csv(path, sep=';', index=False)
+            data.save_df(df, path)
     else:
         st.text('NO DATA FOUND')
 

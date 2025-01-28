@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from collections import Counter
 import streamlit as st
 import os
-
+import data
 from collections import Counter
 import plotly.express as px
 
@@ -166,12 +166,12 @@ if(st.button('Load data')):
         print(paths)
         for path in paths:
             print(path)
-            dfs.append(pd.read_csv(path, sep=';'))
+            dfs.append(data.read_as_df(path))
         df = pd.concat(dfs, axis=0)
         st.session_state.df = df
     else:
         path = f'data/{playlist_name}'
-        df = pd.read_csv(path, sep=';')
+        df = data.read_as_df(path)
         st.session_state.df = df
     
     df['duration_mins'] = df['duration_ms'].apply(lambda x: round(x/1000/60,4))
