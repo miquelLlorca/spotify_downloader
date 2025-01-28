@@ -3,3 +3,4 @@ data/backups/*
 *.png
 .cache
 __pycache__/*
+*.pyc
