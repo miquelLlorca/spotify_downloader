@@ -9,12 +9,25 @@ from collections import Counter
 import os
 import streamlit as st
 import shutil
-from datetime import datetime
+from datetime import datetime, timedelta
 import unicodedata
 import re
 
+def check_too_old(path):
+    file_stats = os.stat(path)
+    last_modified = datetime.fromtimestamp(file_stats.st_mtime)
+    return (datetime.now() - last_modified) >= timedelta(days=1)
 
-def get_playlist_data(sp, playlist_id):
+
+
+
+def get_playlist_data(sp, playlist_id, filename):
+    raw_data_path = f'data/spotify_raw/{filename}'
+    if(os.path.exists(raw_data_path) and not check_too_old(raw_data_path)):
+        st.text('Data already downloaded, skipping API cal...')
+        return pd.read_csv(raw_data_path, sep=';')
+    
+    # if the file does not exist or is older it gets the data again
     all_tracks = []
     offset = 0
     limit = 100
@@ -53,7 +66,9 @@ def get_playlist_data(sp, playlist_id):
             print(f"Error: {e}")
             break
 
-    return pd.DataFrame(all_tracks)
+    df = pd.DataFrame(all_tracks)
+    df.to_csv(raw_data_path, sep=';', index=False)
+    return df
 
 def clean_genres(genres):
     if(type(genres)==list):
@@ -69,7 +84,7 @@ def clean_data(data):
     # Remove diacritical marks (e.g., accents, umlauts)
     without_accents = ''.join(c for c in normalized if not unicodedata.combining(c))
     # Remove other "weird" characters (non-alphanumeric, except spaces, dashes, and underscores)
-    cleaned = re.sub(r'[^a-zA-Z0-9 _-,]', '', without_accents)
+    cleaned = re.sub(r'[^a-zA-Z0-9 _-]', '', without_accents)
     return cleaned.strip()
 
 st.set_page_config(layout="wide")
@@ -94,17 +109,18 @@ if(st.button('Create or update playlist')):
         scope="playlist-read-private playlist-read-collaborative"
     ))
 
-    path = f'data/{playlist_name}-{playlist_id}.csv'
+    filename = f'{playlist_name}-{playlist_id}.csv'
+    path = f'data/{filename}'
     if(os.path.exists(path)):
         st.text('Updating playlist data...')
         shutil.copy(path, f'data/backups/{playlist_name}-{playlist_id}-{datetime.now().strftime("%m-%d_%H-%M-%S")}.csv')
         df = pd.read_csv(path, sep=';')
-        updated_df = get_playlist_data(sp, playlist_id)
+        updated_df = get_playlist_data(sp, playlist_id, filename)
         df.drop(columns=['genres', 'name', 'artist', 'album'], errors='ignore', inplace=True)
         df = pd.merge(df, updated_df, on=['release_date', 'duration_ms', 'popularity'], how='left')
     else:
         st.text('Creating new playlist...')
-        df = get_playlist_data(sp, playlist_id)
+        df = get_playlist_data(sp, playlist_id, filename)
     st.session_state.df = df
 
 
