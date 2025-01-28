@@ -18,6 +18,12 @@ def check_too_old(path):
     last_modified = datetime.fromtimestamp(file_stats.st_mtime)
     return (datetime.now() - last_modified) >= timedelta(days=1)
 
+def correct_date_format(date):
+    if(type(date) != str):
+        date = str(date)
+    if(len(date) == 4):  # If the date is only the year (e.g., '2022')
+        return date + '-01-01'  # Add '-01-01' to make it a full date
+    return date  # Otherwise, return the original date
 
 
 
@@ -84,7 +90,7 @@ def clean_data(data):
     # Remove diacritical marks (e.g., accents, umlauts)
     without_accents = ''.join(c for c in normalized if not unicodedata.combining(c))
     # Remove other "weird" characters (non-alphanumeric, except spaces, dashes, and underscores)
-    cleaned = re.sub(r'[^a-zA-Z0-9 _-]', '', without_accents)
+    cleaned = re.sub(r'[^a-zA-Z0-9 _,-]', '', without_accents)
     return cleaned.strip()
 
 st.set_page_config(layout="wide")
@@ -117,7 +123,12 @@ if(st.button('Create or update playlist')):
         df = pd.read_csv(path, sep=';')
         updated_df = get_playlist_data(sp, playlist_id, filename)
         df.drop(columns=['genres', 'name', 'artist', 'album'], errors='ignore', inplace=True)
-        df = pd.merge(df, updated_df, on=['release_date', 'duration_ms', 'popularity'], how='left')
+        updated_df['popularity'] = updated_df['popularity'].astype(float)
+        # df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce')
+        df['release_date'] = df['release_date'].apply(correct_date_format)
+        df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce', dayfirst=True)
+        updated_df['release_date'] = pd.to_datetime(updated_df['release_date'], errors='coerce')
+        df = pd.merge(updated_df, df, on=['release_date', 'duration_ms', 'popularity'], how='left')
     else:
         st.text('Creating new playlist...')
         df = get_playlist_data(sp, playlist_id, filename)
@@ -126,17 +137,24 @@ if(st.button('Create or update playlist')):
 
 if(st.session_state.get('df') is not None):
     if(len(df)>0):
+        columns = df.columns
             
-        # Cleans data
-        df['YouTube_Title'] = [None for i in range(len(df))]
-        df['YouTube_URL'] = [None for i in range(len(df))]
-        df['downloaded'] = [False for i in range(len(df))]
+        # If columns already exist they should be kept
+        if('YouTube_Title' not in columns):
+            df['YouTube_Title'] = [None for i in range(len(df))]
+        if('YouTube_URL' not in columns):
+            df['YouTube_URL'] = [None for i in range(len(df))]
+        if('downloaded' not in columns):
+            df['downloaded'] = [False for i in range(len(df))]
+
+        # Cleans the data
         st.text('Cleaning data...')
-        if('genres' in df.columns):
-            df['genres'] = df['genres'].apply(clean_genres)
-            df['genres'] = df['genres'].apply(clean_data)
-        columns = ['artist', 'name', 'album']
-        for col in columns:
+        # if('genres' in columns):
+        #     df['genres'] = df['genres'].apply(clean_genres)
+        #     df['genres'] = df['genres'].apply(clean_data)
+
+        columns_to_clean = ['artist', 'name', 'album', 'genres']
+        for col in columns_to_clean:
             df[col] = df[col].apply(clean_data)
             
         st.session_state.df = df
