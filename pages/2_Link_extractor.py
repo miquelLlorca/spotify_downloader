@@ -80,7 +80,7 @@ api_key = 'AIzaSyCUc2-Xr3_OLVSt6Cga60hBmGS4N-hp6Ak'
 st.session_state.quota_exceeded = False
 
 # Get url
-playlist_name = st.selectbox('Select a playlist', [file for file in os.listdir('data/') if file.endswith('.csv')])
+playlist_name = st.selectbox('Select a playlist', data.get_all_playlist_paths())
 method = st.selectbox('Choose an option:', [API, SCRAPER], index=0)
 
 if(method==SCRAPER):

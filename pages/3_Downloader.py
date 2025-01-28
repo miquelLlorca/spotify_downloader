@@ -9,6 +9,7 @@ from collections import Counter
 import streamlit as st
 import os
 import subprocess
+import data
 
 Y2MATE = 'y2mate'
 NOTUBE = 'notube'
@@ -19,19 +20,18 @@ st.text('Here you can download the songs using the links previously extracted.')
 
 
 # Get url
-playlist_name = st.selectbox('Select a playlist', [file for file in os.listdir('data/') if file.endswith('.csv')])
+playlist_name = st.selectbox('Select a playlist', data.get_all_playlist_paths())
 webpage = st.selectbox('Choose an option:', [Y2MATE, NOTUBE], index=0)
 
 
 if(st.button('Start downloading')):
     path = f'data/{playlist_name}'
     with st.spinner("Launching scraper..."):
-        # Pass arguments to the scraper
         subprocess.Popen(
             ["python", "scripts/downloader.py", "--path", path, '--webpage', webpage],
-            stdout=None,  # Suppress output if not needed
+            stdout=None,
             stderr=None,
-            start_new_session=True  # Ensure it runs independently
+            start_new_session=True
         )
     st.success(f"Scraper finished for {playlist_name}!")
     st.text('Check the results as errors are not caught here.')

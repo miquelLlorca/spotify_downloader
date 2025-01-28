@@ -47,3 +47,6 @@ def clean_data(data):
     # Only cleaning needed is taking out ; so it does not cause problems with the csv
     # It's important to keep any other chars, as there are songs in other languages
     return data.replace(';','').strip()
+
+def get_all_playlist_paths():
+    return [file for file in os.listdir('data/') if file.endswith('.csv')]
