@@ -6,6 +6,12 @@ import streamlit as st
 import shutil
 from datetime import datetime
 import data
+import json
+
+def get_spotify_credentials():
+    with open('credentials.json', 'r') as file:
+        creds = json.loads(file.read())
+    return creds['client_id'], creds['client_secret']
 
 
 def get_playlist_data(sp, playlist_id, filename):
@@ -67,8 +73,7 @@ st.title("Playlist creator")
 st.text('Here you can get the data from any playlist on spotify, you can also update already downloaded playlists.')
     
 # Set your Spotify API credentials
-CLIENT_ID = "d125d6339f6d4a7da8b304c605bf20b6"
-CLIENT_SECRET = "0258ebafe0b2402ea990eade3499e7cf"
+CLIENT_ID, CLIENT_SECRET = get_spotify_credentials()
 
 # Get url
 playlist_id = st.text_input('playlist_id', value="6cR4y6y6ExPNk93BodOG56")
