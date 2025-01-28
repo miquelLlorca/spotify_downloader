@@ -2,3 +2,4 @@ data/backups/*
 *.jpg
 *.png
 .cache
+__pycache__/*
