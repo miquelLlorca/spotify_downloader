@@ -12,6 +12,7 @@ import shutil
 from datetime import datetime, timedelta
 import unicodedata
 import re
+import ast
 
 # Here are all the functions related to Data treatment
 
@@ -22,8 +23,8 @@ def read_as_df(path):
     return pd.read_csv(path, sep=';', encoding='utf-8')
 
 
-def create_backup(path, playlist_name, playlist_id):
-    shutil.copy(path, f'data/backups/{playlist_name}-{playlist_id}-{datetime.now().strftime("%m-%d_%H-%M-%S")}.csv')
+def create_playlist_backup(path):
+    shutil.copy(path, f'data/backups/{os.path.basename(path).replace(".csv","")}-{datetime.now().strftime("%m-%d_%H-%M-%S")}.csv')
 
 def check_too_old(path):
     ''' Used for checking if the spotify raw data should be updated, so useless API calls can be avoided. '''
@@ -50,3 +51,32 @@ def clean_data(data):
 
 def get_all_playlist_paths():
     return [file for file in os.listdir('data/') if file.endswith('.csv')]
+
+def flatten_genres(df):
+    all_lists = df['genres']
+    genres = []
+
+    for genre_list in all_lists:
+        if(type(genre_list)==float):
+            pass
+        else:
+            aux = ast.literal_eval(genre_list)
+            for g in aux:
+                if(len(g)>0):
+                    genres.append(g)
+            
+    return genres
+
+def flatten_artists(df):
+    all_lists = df['artist']
+    artists = []
+
+    for artist_list in all_lists:
+        if(type(artist_list)==float):
+            pass
+        else:
+            aux = artist_list.split(', ')
+            for a in aux:
+                if(len(a)>0):
+                    artists.append(a)
+    return artists
