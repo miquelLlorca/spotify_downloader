@@ -2,10 +2,10 @@ name;artist;album;release_date;duration_ms;popularity;genres;YouTube_Title;YouTu
 2 Hearts;Digitalism;I Love You, Dude;2011-06-20;236746;0.0;['alternative dance', 'indietronica', 'electroclash', 'electronic rock', 'new rave', 'french house'];Digitalism - 2 Hearts (Official Video);https://www.youtube.com/watch?v=ppRQEXhNC-o&pp=ygUTMiBIZWFydHMgRGlnaXRhbGlzbQ%3D%3D;False
 She Don't Dance;Everyone You Know;She Don't Dance;2019-07-19;226610;49.0;[];Everyone You Know - She Don't Dance (Official Video);https://www.youtube.com/watch?v=ITg14gb3ofo&pp=ygUgU2hlIERvbnQgRGFuY2UgRXZlcnlvbmUgWW91IEtub3c%3D;False
 Momentary Bliss (feat. slowthai and Slaves);Gorillaz, slowthai, SOFT PLAY;Song Machine, Season One: Strange Timez (Deluxe);2020-10-23;221386;54.0;['grime'];Gorillaz - Momentary Bliss ft. slowthai & Slaves (Episode One);https://www.youtube.com/watch?v=QTt7301PR5k&pp=ygVETW9tZW50YXJ5IEJsaXNzIGZlYXQgc2xvd3RoYWkgYW5kIFNsYXZlcyBHb3JpbGxheiBzbG93dGhhaSBTT0ZUIFBMQVk%3D;False
-She's My Collar (feat. Kali Uchis);Gorillaz, Kali Uchis;Humanz (Deluxe);2017-04-28;209560;72.0;[];;;
+She's My Collar (feat. Kali Uchis);Gorillaz, Kali Uchis;Humanz (Deluxe);2017-04-28;209560;72.0;[];"Gorillaz - She's My Collar (Lyrics) ft. Kali Uchis ""She's the serpentine, she's my collar"" [Tiktok]";https://www.youtube.com/watch?v=J5G0GC3s3cM&pp=ygU3U2hlJ3MgTXkgQ29sbGFyIChmZWF0LiBLYWxpIFVjaGlzKSBHb3JpbGxheiwgS2FsaSBVY2hpcw%3D%3D;
 Andromeda (feat. DRAM);Gorillaz, DRAM;Humanz (Deluxe);2017-04-28;197546;61.0;[];Gorillaz - Andromeda (DRAM Special) [Audio];https://www.youtube.com/watch?v=zD6PveAO6l0&pp=ygUhQW5kcm9tZWRhIGZlYXQgRFJBTSBHb3JpbGxheiBEUkFN;False
 Aries (feat. Peter Hook and Georgia);Gorillaz, Peter Hook, Georgia;Song Machine, Season One: Strange Timez (Deluxe);2020-10-23;253333;50.0;['acid house', 'madchester'];Gorillaz - Aries ft. Peter Hook & Georgia (Episode Three);https://www.youtube.com/watch?v=PKXloFW_ZCA&pp=ygU9QXJpZXMgZmVhdCBQZXRlciBIb29rIGFuZCBHZW9yZ2lhIEdvcmlsbGF6IFBldGVyIEhvb2sgR2VvcmdpYQ%3D%3D;False
-Rhinestone Eyes;Gorillaz;Plastic Beach;2010-03-03;200173;75.0;[];;;
+Rhinestone Eyes;Gorillaz;Plastic Beach;2010-03-03;200173;75.0;[];Gorillaz - Rhinestone Eyes (Official Audio);https://www.youtube.com/watch?v=7GdsftXc0yU&pp=ygUYUmhpbmVzdG9uZSBFeWVzIEdvcmlsbGF6;
 On Melancholy Hill;Gorillaz;Plastic Beach;2010-03-03;233866;78.0;[];Gorillaz - On Melancholy Hill (Official Video);https://www.youtube.com/watch?v=04mfKJWDSzI&pp=ygUbT24gTWVsYW5jaG9seSBIaWxsIEdvcmlsbGF6;False
 DARE;Gorillaz;Demon Days;2005-05-23;244999;76.0;[];Gorillaz - DARE (Official Video);https://www.youtube.com/watch?v=uAOR6ib95kQ&pp=ygUNREFSRSBHb3JpbGxheg%3D%3D;False
 Cracker Island (feat. Thundercat);Gorillaz, Thundercat;Cracker Island (feat. Thundercat);2022-06-22;213750;58.0;[];Gorillaz - Cracker Island ft. Thundercat (Official Video);https://www.youtube.com/watch?v=S03T47hapAc&pp=ygUyQ3JhY2tlciBJc2xhbmQgZmVhdCBUaHVuZGVyY2F0IEdvcmlsbGF6IFRodW5kZXJjYXQ%3D;False
@@ -18,40 +18,40 @@ Colours;Reptile Youth;Rivers That Run for a Sea That Is Gone;2014-03-10;244053;0
 JJ;Reptile Youth;Rivers That Run for a Sea That Is Gone;2014-03-10;298346;0.0;['electronic rock'];Reptile Youth - JJ;https://www.youtube.com/watch?v=8ZtlmVoxU6Y&pp=ygUQSkogUmVwdGlsZSBZb3V0aA%3D%3D;False
 Blinded By The Moonlight;The Amplifetes;The Amplifetes;2010-01-01;206888;29.0;['electronic rock'];The Amplifetes - Blinded By The Moonlight Official;https://www.youtube.com/watch?v=o5_b2uQwOUM&pp=ygUnQmxpbmRlZCBCeSBUaGUgTW9vbmxpZ2h0IFRoZSBBbXBsaWZldGVz;False
 Let’s Go;Stuck in the Sound;Pursuit;2012-01-30;211453;56.0;[];Stuck In the Sound - Let's Go [Official Video];https://www.youtube.com/watch?v=52Gg9CqhbP8&pp=ygUaTGV0cyBHbyBTdHVjayBpbiB0aGUgU291bmQ%3D;False
-Truth;Bloc Party;Four;2012-08-20;240373;35.0;['indie rock'];;;
+Truth;Bloc Party;Four;2012-08-20;240373;35.0;['indie rock'];Truth;https://www.youtube.com/watch?v=UsLlJQAaGew&pp=ygUQVHJ1dGggQmxvYyBQYXJ0eQ%3D%3D;
 Retreat;The Rakes;Capture / Release;2005-01-01;178093;25.0;['garage rock', 'new rave'];The Rakes - Retreat;https://www.youtube.com/watch?v=bW8mTkP8Ng0&pp=ygURUmV0cmVhdCBUaGUgUmFrZXM%3D;False
 Stop Taking My Time;Club 8;Above the City;2013-01-01;170786;6.0;['jangle pop'];"Club 8 ""Stop Taking My Time""";https://www.youtube.com/watch?v=oG6qtjvjrdI&pp=ygUaU3RvcCBUYWtpbmcgTXkgVGltZSBDbHViIDg%3D;False
 Suéltame, Bogotá;Diamante Eléctrico;Mira Lo Que Me Hiciste Hacer;2021-02-11;228543;0.0;['latin rock', 'latin r&b', 'latin indie', 'latin alternative', 'rock en español'];Diamante Eléctrico - Suéltame, Bogotá [Video Oficial];https://www.youtube.com/watch?v=sO3UIoD0Ays&pp=ygUiU3VlbHRhbWUgQm9nb3RhIERpYW1hbnRlIEVsZWN0cmljbw%3D%3D;False
 Keep Moving;Jungle;Loving In Stereo;2021-08-13;240880;64.0;[];Jungle - Keep Moving (Official Video);https://www.youtube.com/watch?v=7-lWzQd_xeQ&pp=ygUSS2VlcCBNb3ZpbmcgSnVuZ2xl;False
 Tiroteo;Marc Seguí, Pol Granch;Tiroteo;2021-01-15;266290;65.0;[];Marc Seguí, Pol Granch - Tiroteo (Videoclip Oficial);https://www.youtube.com/watch?v=dkWuczbmkIo&pp=ygUdVGlyb3RlbyBNYXJjIFNlZ3VpIFBvbCBHcmFuY2g%3D;False
 Where Damage Isn't Already Done;The Radio Dept.;Lesser Matters;2004-08-30;163493;32.0;['shoegaze', 'dream pop'];The Radio Dept - Where Damage isnt Already Done (Official Video);https://www.youtube.com/watch?v=7iVXEMyQnpA&pp=ygUtV2hlcmUgRGFtYWdlIElzbnQgQWxyZWFkeSBEb25lIFRoZSBSYWRpbyBEZXB0;False
-Tranz;Gorillaz;The Now Now;2018-06-29;162626;62.0;[];;;
+Tranz;Gorillaz;The Now Now;2018-06-29;162626;62.0;[];Gorillaz - Tranz (Official Video);https://www.youtube.com/watch?v=E2Q52cVx7Bo&pp=ygUOVHJhbnogR29yaWxsYXo%3D;
 The Look;Metronomy;The English Riviera;2011-04-11;277653;72.0;['alternative dance', 'indietronica', 'new rave'];Metronomy - The Look (Official Video);https://www.youtube.com/watch?v=sFrNsSnk8GM&pp=ygUSVGhlIExvb2sgTWV0cm9ub215;False
 Búho;Mr. Bleat;Búho;2018-06-08;300338;30.0;['latin indie', 'latin alternative'];Mr. Bleat - Búho;https://www.youtube.com/watch?v=sT5PhoXUWQk&pp=ygUNQnVobyBNciBCbGVhdA%3D%3D;False
 EME;MIEL, Bardo José;EME;2021-07-28;191213;38.0;['latin indie'];EME;https://www.youtube.com/watch?v=sC-mOCnGI64&pp=ygUTRU1FIE1JRUwgQmFyZG8gSm9zZQ%3D%3D;False
 Play God;Everyone You Know;Play God;2019-12-06;178877;31.0;[];Sam Fender - Play God (Everyone You Know Refix);https://www.youtube.com/watch?v=wGd42P6VCKo&pp=ygUaUGxheSBHb2QgRXZlcnlvbmUgWW91IEtub3c%3D;False
 You Were Right;RÜFÜS DU SOL;Bloom;2016-01-22;239417;46.0;['indietronica'];RÜFÜS DU SOL ●● You Were Right [Official Video];https://www.youtube.com/watch?v=Gp-lWgUDcKk&pp=ygUbWW91IFdlcmUgUmlnaHQgUlVGVVMgRFUgU09M;False
 Ratchet;Bloc Party;FOUR (Deluxe Version);2013-08-26;198017;48.0;['indie rock'];Bloc Party - Ratchet (Official Music Video);https://www.youtube.com/watch?v=Q3EEaPj-5qs&pp=ygUSUmF0Y2hldCBCbG9jIFBhcnR5;False
-Navy Light;Labyrinth Ear;Oak;2010-03-08;187506;55.0;['witch house', 'darkwave', 'cold wave'];;;
-Odessa;Caribou;Swim;2010-04-16;315293;24.0;['indietronica', 'idm'];;;
+Navy Light;Labyrinth Ear;Oak;2010-03-08;187506;55.0;['witch house', 'darkwave', 'cold wave'];Navy Light;https://www.youtube.com/watch?v=6FpAHhKCeWg&pp=ygUYTmF2eSBMaWdodCBMYWJ5cmludGggRWFy;
+Odessa;Caribou;Swim;2010-04-16;315293;24.0;['indietronica', 'idm'];CARIBOU - Odessa;https://www.youtube.com/watch?v=VxPPbPYMPn8&pp=ygUOT2Rlc3NhIENhcmlib3U%3D;
 Trash - Original;The Whip;Trash;2008-03-16;383653;22.0;['alternative dance', 'indietronica', 'electroclash', 'electronic rock', 'new rave', 'indie dance'];The Whip - Trash;https://www.youtube.com/watch?v=p8e19MVPS5I&pp=ygUZVHJhc2ggLSBPcmlnaW5hbCBUaGUgV2hpcA%3D%3D;False
 Kids;MGMT;Oracular Spectacular;2007-12-14;302840;78.0;['indietronica', 'indie'];MGMT - Kids (Lyrics);https://www.youtube.com/watch?v=rdKfuwy6LUM&pp=ygUJS2lkcyBNR01U;False
 Skinny Ape;Gorillaz;Cracker Island;2023-02-24;281258;47.0;[];Gorillaz - Skinny Ape (Official Lyric Video);https://www.youtube.com/watch?v=D8tjuP_nq5I&pp=ygUTU2tpbm55IEFwZSBHb3JpbGxheg%3D%3D;False
-Vertebrae;Channo, Luchii;Vertebrae;2020-11-24;177301;53.0;[];;;
+Vertebrae;Channo, Luchii;Vertebrae;2020-11-24;177301;53.0;[];Channo - Vertebrae;https://www.youtube.com/watch?v=DUvqOaZTzKE&pp=ygUYVmVydGVicmFlIENoYW5ubywgTHVjaGlp;
 Oil (feat. Stevie Nicks);Gorillaz, Stevie Nicks;Cracker Island;2023-02-24;230141;55.0;[];Gorillaz - Oil ft. Stevie Nicks (Official Audio);https://www.youtube.com/watch?v=lK5HVlcs0og&pp=ygUrT2lsIGZlYXQgU3RldmllIE5pY2tzIEdvcmlsbGF6IFN0ZXZpZSBOaWNrcw%3D%3D;False
 New Gold (feat. Tame Impala and Bootie Brown);Gorillaz, Tame Impala, Bootie Brown;Cracker Island;2023-02-24;215149;65.0;['psychedelic pop', 'indie'];Gorillaz - New Gold ft. Tame Impala & Bootie Brown (Official Visualiser);https://www.youtube.com/watch?v=qJa-VFwPpYA&pp=ygVMTmV3IEdvbGQgZmVhdCBUYW1lIEltcGFsYSBhbmQgQm9vdGllIEJyb3duIEdvcmlsbGF6IFRhbWUgSW1wYWxhIEJvb3RpZSBCcm93bg%3D%3D;False
 Blind - Radio Edit;Hercules & Love Affair;Blind;2008-02-29;345560;45.0;[];Blind (Radio Edit);https://www.youtube.com/watch?v=PiurnL5Ngi4&pp=ygUoQmxpbmQgLSBSYWRpbyBFZGl0IEhlcmN1bGVzICBMb3ZlIEFmZmFpcg%3D%3D;False
 Over And Over;Hot Chip;The Warning;2006-05-22;347880;53.0;['alternative dance', 'indietronica', 'new rave', 'indie dance'];Hot Chip - Over and Over (Official Video) (HD);https://www.youtube.com/watch?v=pDJKgi2e-Aw&pp=ygUWT3ZlciBBbmQgT3ZlciBIb3QgQ2hpcA%3D%3D;False
-It's Not Over Yet;Klaxons;Myths Of The Near Future;2007-01-01;215253;50.0;['alternative dance', 'new rave', 'indie'];;;
+It's Not Over Yet;Klaxons;Myths Of The Near Future;2007-01-01;215253;50.0;['alternative dance', 'new rave', 'indie'];Klaxons - It's Not Over Yet;https://www.youtube.com/watch?v=dGm1B9784nk&pp=ygUZSXQncyBOb3QgT3ZlciBZZXQgS2xheG9ucw%3D%3D;
 O.N.E.;Yeasayer;Odd Blood;2010-02-09;321013;38.0;[];Yeasayer - O.N.E. (Official Music Video);https://www.youtube.com/watch?v=6m1O5i6oUTI&pp=ygUMT05FIFllYXNheWVy;False
 Lilas;MIEL;ƎDÉN;2020-11-27;213896;29.0;['latin indie'];Lilas;https://www.youtube.com/watch?v=J1vYqlW_nCY&pp=ygUKTGlsYXMgTUlFTA%3D%3D;False
 Evil;Interpol;Antics;2004-09-27;215826;49.0;['indie rock', 'modern rock', 'post-punk'];Interpol - Evil (Official Video);https://www.youtube.com/watch?v=dkpgz3uQ58U&pp=ygUNRXZpbCBJbnRlcnBvbA%3D%3D;False
-HAUT LES COEURS;Fauve;HAUT LES COEURS;2013-12-20;268961;38.0;['variété française', 'chanson', 'french pop', 'spoken word', 'french house'];;;
+HAUT LES COEURS;Fauve;HAUT LES COEURS;2013-12-20;268961;38.0;['variété française', 'chanson', 'french pop', 'spoken word', 'french house'];FAUVE ≠ HAUT LES CŒURS;https://www.youtube.com/watch?v=etmSWkeRYbk&pp=ygUVSEFVVCBMRVMgQ09FVVJTIEZhdXZl;
 Makeba;Jain;Zanaka;2016-10-21;249533;65.0;['french pop'];Jain - Makeba (Official Video);https://www.youtube.com/watch?v=59Q_lhgGANc&pp=ygULTWFrZWJhIEphaW4%3D;False
 Shut up My Moms Calling;Hotel Ugly;Shut up My Moms Calling;2020-02-10;164571;84.0;[];Hotel Ugly - Shut Up My Moms Calling (Lyrics);https://www.youtube.com/watch?v=J4ANQfaf_gc&pp=ygUiU2h1dCB1cCBNeSBNb21zIENhbGxpbmcgSG90ZWwgVWdseQ%3D%3D;False
 NO ESTOY;Kinder Malo;NO ESTOY;2023-05-18;153901;17.0;[];3. KINDER MALO - NO ESTOY (VIDEO OFICIAL);https://www.youtube.com/watch?v=c0E_6kiP39Y&pp=ygUUTk8gRVNUT1kgS2luZGVyIE1hbG8%3D;False
 Dissolve;Absofacto, NITESHIFT;Thousand Peaces;2017-11-03;224660;57.0;[];DISSOLVE (by Absofacto) | NITESHIFT;https://www.youtube.com/watch?v=xe2FPP4lX14&pp=ygUcRGlzc29sdmUgQWJzb2ZhY3RvIE5JVEVTSElGVA%3D%3D;False
-Play Together;Chew Lips;Unicorn;2010-01-25;155666;24.0;['electroclash', 'alternative dance', 'new rave'];;;
+Play Together;Chew Lips;Unicorn;2010-01-25;155666;24.0;['electroclash', 'alternative dance', 'new rave'];Play Together - Chew Lips - Official Video - New Songs 2009;https://www.youtube.com/watch?v=u89t4-9-kM8&pp=ygUXUGxheSBUb2dldGhlciBDaGV3IExpcHM%3D;
 ROCKETPOWERS;Dillom, Saramalacara;POST MORTEM;2021-12-01;188238;56.0;['argentine trap', 'trap', 'hyperpop'];DILLOM, SARAMALACARA - ROCKETPOWERS (Versión Legal);https://www.youtube.com/watch?v=PAzon8ZFNRU&pp=ygUgUk9DS0VUUE9XRVJTIERpbGxvbSBTYXJhbWFsYWNhcmE%3D;False
 Lost mary;Issermann;very dramatic and a little pathetic;2023-12-08;173500;0.0;[];Issermann - Lost mary (Music Video);https://www.youtube.com/watch?v=AlY0hKn_tms&pp=ygUTTG9zdCBtYXJ5IElzc2VybWFubg%3D%3D;False
 With Every Heartbeat;Kleerup, Robyn;Kleerup;2009-05-22;253186;32.0;['chillstep'];Robyn with Kleerup - With Every Heartbeat;https://www.youtube.com/watch?v=-ojHWQrm4UM&pp=ygUiV2l0aCBFdmVyeSBIZWFydGJlYXQgS2xlZXJ1cCBSb2J5bg%3D%3D;False
@@ -62,7 +62,7 @@ Fantasia;Chico Pablo, Chico Blanco;Fantasia;2020-07-16;282694;49.0;[];Chico Blan
 Off We Go Into The Wild Pale Yonder;Sea Power;Disco Elysium;2020-06-21;237773;35.0;[];Off We Go Into The Wild Pale Yonder;https://www.youtube.com/watch?v=YTyH3GT_LVg&pp=ygUtT2ZmIFdlIEdvIEludG8gVGhlIFdpbGQgUGFsZSBZb25kZXIgU2VhIFBvd2Vy;False
 Cada superficie;Casero;estoy exagerando???;2024-11-08;155145;30.0;[];Casero - Cada Superficie (Videoclip);https://www.youtube.com/watch?v=nn_BT47I6zc&pp=ygUWQ2FkYSBzdXBlcmZpY2llIENhc2Vybw%3D%3D;False
 Pesticides - Remix;Moselle, Matt Hip;Pesticides (Remix);2024-05-06;166874;40.0;[];Moselle & Matt Hip - Pesticides Remix (Lyric Video);https://www.youtube.com/watch?v=dB57xBOitc4&pp=ygUjUGVzdGljaWRlcyAtIFJlbWl4IE1vc2VsbGUgTWF0dCBIaXA%3D;False
-El Xokas;Hofe, 4:40, Kiliki, Sunny Wright IV;Amorrua;2023-11-15;196000;36.0;[];;;
-Ian Curtis;Hofe, 4:40, JEWLN;Amorrua;2023-11-15;184941;20.0;[];;;
-Ez garela etsaiak;Hofe, 4:40;Amorrua;2023-11-15;33399;31.0;[];;;
-Edamame;Hofe, 4:40, L'haine, NormanBate$, J Cream;Amorrua;2023-11-15;169600;25.0;[];;;
+El Xokas;Hofe, 4:40, Kiliki, Sunny Wright IV;Amorrua;2023-11-15;196000;36.0;[];HOFE X 4:40 (FT. Kiliki, Sunny Wright IV) - EL XOKAS (VISUALIZER);https://www.youtube.com/watch?v=vWCFe02TVR8&pp=ygUsRWwgWG9rYXMgSG9mZSwgNDo0MCwgS2lsaWtpLCBTdW5ueSBXcmlnaHQgSVY%3D;
+Ian Curtis;Hofe, 4:40, JEWLN;Amorrua;2023-11-15;184941;20.0;[];HOFE X 4:40 (FT. JEWLN) - IAN CURTIS (VISUALIZER);https://www.youtube.com/watch?v=uPDZnxxeWJM&pp=ygUcSWFuIEN1cnRpcyBIb2ZlLCA0OjQwLCBKRVdMTg%3D%3D;
+Ez garela etsaiak;Hofe, 4:40;Amorrua;2023-11-15;33399;31.0;[];HOFE X 4:40 - EZ GARELA ETSAIAK (VISUALIZER);https://www.youtube.com/watch?v=T69W8wb0Q-s&pp=ygUcRXogZ2FyZWxhIGV0c2FpYWsgSG9mZSwgNDo0MA%3D%3D;
+Edamame;Hofe, 4:40, L'haine, NormanBate$, J Cream;Amorrua;2023-11-15;169600;25.0;[];HOFE X 4:40 (FT. L'Haine, NormanBate$, J Cream) EDAMAME (VISUALIZER);https://www.youtube.com/watch?v=AbhH9UO-wuQ&pp=ygUxRWRhbWFtZSBIb2ZlLCA0OjQwLCBMJ2hhaW5lLCBOb3JtYW5CYXRlJCwgSiBDcmVhbQ%3D%3D;
