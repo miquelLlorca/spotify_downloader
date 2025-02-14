@@ -5,6 +5,7 @@ import pandas as pd
 import streamlit as st
 import plotly.express as px
 from collections import Counter
+import plotly.graph_objects as go
 
 
 def plot_top_genres_histogram(df, top_n):
@@ -124,7 +125,6 @@ def plot_duration_histogram(df):
 
 def plot_release_year_histogram(df):
     ''' Plots the number of songs released by year in the playlists loaded. '''
-    df['release_year'] = pd.to_datetime(df['release_date'], format='mixed', errors='coerce').dt.year
     fig = px.histogram(
         df,
         x='release_year',
@@ -140,13 +140,85 @@ def plot_release_year_histogram(df):
     )
     return fig
 
+def plot_mean_release_year(df):
+    # Calculate mean release year for each playlist
+    mean_years = df.groupby("playlist")["release_year"].mean().reset_index()
+    mean_years["release_year"] = mean_years["release_year"].astype(float)  
+    mean_years = mean_years.sort_values(by="release_year").reset_index(drop=True)
+
+    # Create figure
+    fig = go.Figure()
+    colors = px.colors.qualitative.Plotly  # Can use other color scales like 'Set1', 'Dark24', etc.
+    # Add vertical lines and annotations for each playlist
+    for i, row in mean_years.iterrows():
+        y_position = 0.02+(i * (1/len(mean_years)))  # Moves text higher for each playlist
+        fig.add_trace(go.Scatter(
+            x=[row["release_year"], row["release_year"]],
+            y=[0, 1],  # Fixed y-range for vertical lines
+            mode="lines",
+            line=dict(color=colors[i % len(colors)], width=3),
+            hoverinfo="x+text",
+            name=row["playlist"]
+        ))
+
+        # Add a separate text label to move it higher
+        fig.add_trace(go.Scatter(
+            x=[row["release_year"]],
+            y=[y_position],  # Move text label higher
+            mode="text",
+            text=[row["playlist"]],
+            textfont=dict(size=16, color=colors[i % len(colors)]),
+            showlegend=False
+        ))
+
+    # Update layout
+    fig.update_layout(
+        title="Mean Release Year by Playlist",
+        xaxis_title="Release Year",
+        yaxis=dict(showticklabels=False),  # Hide y-axis labels
+        showlegend=True,
+        height=600
+    )
+
+
+    return fig
+
+def plot_song_state_pie(df, playlist=''):
+    state_count = pd.DataFrame({
+        'State': ['Without link', 'With link but not downloaded', 'Downloaded'],
+        'Count': [
+            len(df[df['YouTube_URL'].isna()]),
+            len(df[~df['YouTube_URL'].isna() & ~df['downloaded']]),
+            len(df[df['downloaded']]),
+        ]
+    })
+
+    # Define a fixed color mapping for consistency
+    color_map = {
+        'Without link': 'rgb(227, 79, 39)',  # Soft red
+        'With link but not downloaded': 'rgb(252, 186, 3)',  # Muted orange
+        'Downloaded': 'rgb(86, 204, 82)'  # Soft green
+    }
+
+    title = 'Song State Distribution' if playlist=='' else f'Distribution for {playlist}'
+    return px.pie(
+        state_count,
+        names='State',
+        values='Count',
+        title=title,
+        color='State',  # Use the 'State' column for color mapping
+        color_discrete_map=color_map  # Apply fixed colors
+    )
+
+
+
 ###################################################################################################################################################################
 ###################################################################################################################################################################
 ###################################################################################################################################################################
 
 if(__name__=='__main__'):
     ALL = 'All of them'
-
+    st.set_page_config(layout="wide")
     playlist_name = st.selectbox('Select a playlist', [ALL]+data.get_all_playlist_paths())
     df = st.session_state.get('df')
 
@@ -168,6 +240,8 @@ if(__name__=='__main__'):
             st.session_state.df = df
         
         df['duration_mins'] = df['duration_ms'].apply(lambda x: round(x/1000/60,4))
+        df['downloaded'] = df['downloaded'].apply(lambda x: x if type(x)==bool else False)
+        df['release_year'] = pd.to_datetime(df['release_date'], format='mixed', errors='coerce').dt.year
         print('Data loaded')
 
 
@@ -203,8 +277,14 @@ if(__name__=='__main__'):
         st.title('RELEASE DATE')
         with(st.expander('Click to show/hide')):
             st.plotly_chart(plot_release_year_histogram(df))
+            st.plotly_chart(plot_mean_release_year(df))
+            
 
-
-
-
-
+        st.title('SONG STATE')
+        with(st.expander('Click to show/hide')):
+            st.plotly_chart(plot_song_state_pie(df))
+            if(playlist_name==ALL):
+                n_cols = 4
+                columns = st.columns(n_cols)
+                for i, playlist in enumerate(df['playlist'].unique()):
+                    columns[i%n_cols].plotly_chart(plot_song_state_pie(df[df['playlist']==playlist], playlist))  

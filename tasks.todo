@@ -43,12 +43,12 @@ Coding:
         ✔ Histogram for genres (depends of data tasks) @done (1/28/2025, 3:33:59 PM)
         ✔ Duration stats with total time, histogram and median @done (1/24/2025, 3:54:26 PM)
         ✔ Release date histogram @done (1/24/2025, 3:54:26 PM)
-        ☐ Playlist length histogram
-        ☐ Group subgenres and make another histogram
+        ☐ Playlist length cheese wheel
+        ☐ Group subgenres into bigger genres and make another histogram
         ☐ Add funny captions for different results in each category
-        ☐ Cheese graph to show % of downloaded and or extracted links by playlist
+        ✔ Cheese graph to show % of downloaded and or extracted links by playlist @done (2/14/2025, 1:15:02 PM)
         ☐ KDE for popularity by playlist
-
+        ✔ Mean release year by playlist @done (2/14/2025, 1:38:26 PM)
 
 
     MP3 Player:
