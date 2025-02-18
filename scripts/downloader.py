@@ -121,7 +121,7 @@ def download_with_y2mate(path):
                 convert_button.click()
 
                 # 4. Wait for download button to appear and click it
-                dowload_button = WebDriverWait(driver, 60).until(
+                dowload_button = WebDriverWait(driver, 120).until(
                     EC.element_to_be_clickable((By.XPATH, "//button[text()='Download']"))
                 )
                 dowload_button.click()
