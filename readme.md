@@ -20,7 +20,8 @@ You will need to get your own API credentials to get your playlists, this is eas
 2. Set Redirect URL as _http://localhost:8888/callback_
 3. Click on 'Create'
 4. Click on 'Settings' and get your credentials
-5. Copy them to the file _credentials.json_
+5. Create the file _credentials.json_
+6. Add your credentials with the following format: {"client_id":"...","client_secret":"..."}
 
 ### ChromeDriver
 The scrapers work using Google Chrome, so you will need to install it and ChromeDriver. You can follow any online tutorial on it (e.g: _https://skolo.online/documents/webscrapping/_), there shouldn't be any problem regarding versions as the scraping done uses basic functions.
