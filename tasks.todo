@@ -23,7 +23,7 @@ Documentation:
 
 Bugs:
     ✔ Updating playlists does not work correctly @done (1/28/2025, 1:14:50 PM)
-
+    ✔ Check why update still does not work properly!! @high @done (2/21/2025, 1:24:12 PM)
 Data:
     ✔ Create raw data backups for Spotify @high @done (1/28/2025, 12:07:11 PM)
     ✔ Check data treatment consistency and 1st refactor @high @done (1/28/2025, 2:13:01 PM)
@@ -37,6 +37,8 @@ Coding:
         ✔ Check way for not wasting Spotify calls @done (1/28/2025, 2:37:19 PM)
     Scripts:
         ✘ Implement downloader with notube @cancelled (1/24/2025, 3:54:43 PM)
+    Playlist creation:
+        ☐ Add way to create playlists from albums
     Statistics:
         ✔ Organize page better @done (1/28/2025, 3:35:21 PM)
         ✔ Histogram for artists (depends of data tasks) @done (1/28/2025, 3:33:58 PM)

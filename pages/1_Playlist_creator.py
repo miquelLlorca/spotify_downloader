@@ -66,6 +66,7 @@ def get_playlist_data(sp, playlist_id, filename):
     return df
 
 
+
 if(__name__=="__main__"):
     CLIENT_ID, CLIENT_SECRET = get_spotify_credentials()
 
@@ -95,7 +96,7 @@ if(__name__=="__main__"):
             updated_df = get_playlist_data(sp, playlist_id, filename)
 
             # Prepares data for merge
-            df.drop(columns=['genres', 'name', 'artist', 'album'], errors='ignore', inplace=True)
+            df.drop(columns=['genres', 'name', 'artist', 'album', 'popularity'], errors='ignore', inplace=True)
             updated_df['popularity'] = updated_df['popularity'].astype(float)
             df['release_date'] = df['release_date'].apply(data.correct_date_format)
             df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce')
@@ -103,7 +104,7 @@ if(__name__=="__main__"):
             updated_df['release_date'] = pd.to_datetime(updated_df['release_date'], errors='coerce')
 
             # Merges on left to make sure new data is added to df
-            df = pd.merge(updated_df, df, on=['release_date', 'duration_ms', 'popularity'], how='left')
+            df = pd.merge(updated_df, df, on=['release_date', 'duration_ms'], how='left')
         else:
             st.text('Creating new playlist...')
             df = get_playlist_data(sp, playlist_id, filename)
