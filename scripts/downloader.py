@@ -94,6 +94,9 @@ def download_with_y2mate(path):
     chrome_options.add_argument("--ignore-certificate-errors")  # Ignore SSL certificate errors
     chrome_options.add_argument("--disable-web-security")       # Disable security checks
     chrome_options.add_argument("--disable-infobars")           # Suppress infobars (if applicable)
+    chrome_options.add_argument("--disable-popup-blocking")  # Blocks pop-ups
+    chrome_options.add_experimental_option("excludeSwitches", ["disable-popup-blocking"])
+    chrome_options.add_argument("--disable-backgrounding-occluded-windows")
     # chrome_options.add_argument("--headless")                   # Optional: No GUI if headless mode is needed
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
 
@@ -104,7 +107,7 @@ def download_with_y2mate(path):
         
     try:
         driver.get("https://y2mate.nu/en-efXo/")
-
+        main_window = driver.current_window_handle  
         for i, row in df.iterrows():
 
             if(type(row['YouTube_URL'])==str and not row['downloaded']):
@@ -132,6 +135,19 @@ def download_with_y2mate(path):
                 data.save_df(df, path)
                 print(f'Downloaded {i} - {row["YouTube_Title"]}')
                 
+                # Wait for new tab to open
+                while len(driver.window_handles) <= 1:
+                    pass  # Wait until a new tab is detected
+
+                # Close all new tabs
+                for handle in driver.window_handles:
+                    if handle != main_window:
+                        driver.switch_to.window(handle)
+                        driver.close()
+
+                # Switch back to main window
+                driver.switch_to.window(main_window)
+
                 # 6. Click on next to continue donwloading
                 next_button = WebDriverWait(driver, 10).until(
                     EC.element_to_be_clickable((By.XPATH, "//button[text()='Next']"))

@@ -37,6 +37,7 @@ Coding:
         ✔ Check way for not wasting Spotify calls @done (1/28/2025, 2:37:19 PM)
     Scripts:
         ✘ Implement downloader with notube @cancelled (1/24/2025, 3:54:43 PM)
+        ☐ Solve y2mate pop-ups
     Playlist creation:
         ✔ Add way to create playlists from albums @done (2/21/2025, 3:06:42 PM)
     Statistics:
@@ -51,7 +52,7 @@ Coding:
         ✔ Cheese graph to show % of downloaded and or extracted links by playlist @done (2/14/2025, 1:15:02 PM)
         ☐ KDE for popularity by playlist
         ✔ Mean release year by playlist @done (2/14/2025, 1:38:26 PM)
-
+        ✔ Add state wheel when a playlist is selected for extracting links or downloading. @done (2/23/2025, 3:39:45 PM)
 
     MP3 Player:
         Investigate best way to implement it:

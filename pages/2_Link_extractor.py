@@ -1,6 +1,7 @@
 import data
 import subprocess
 import streamlit as st
+import plots
 
 if(__name__=='__main__'):
     st.set_page_config(layout="wide")
@@ -23,9 +24,10 @@ if(__name__=='__main__'):
         </div>
         """, unsafe_allow_html=True
     )
-
+    path = f'data/{filename}'
+    st.plotly_chart(plots.plot_song_state_pie(data.read_as_df(path)))
+    
     if(st.button('Get links')):
-        path = f'data/{filename}'
         with st.spinner("Launching scraper..."):
             subprocess.Popen(
                 ["python", "scripts/youtube_scraper.py", "--path", path],

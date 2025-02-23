@@ -1,6 +1,7 @@
 import data
 import subprocess
 import streamlit as st
+import plots
 
 Y2MATE = 'y2mate'
 NOTUBE = 'notube'
@@ -13,9 +14,10 @@ if(__name__=='__main__'):
 
     playlist_name = st.selectbox('Select a playlist', data.get_all_playlist_paths())
     webpage = st.selectbox('Choose an option:', [Y2MATE, NOTUBE], index=0)
-
+    path = f'data/{playlist_name}'
+    st.plotly_chart(plots.plot_song_state_pie(data.read_as_df(path)))
+    
     if(st.button('Start downloading')):
-        path = f'data/{playlist_name}'
         with st.spinner("Launching scraper..."):
             subprocess.Popen(
                 ["python", "scripts/downloader.py", "--path", path, '--webpage', webpage],
