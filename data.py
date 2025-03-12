@@ -50,7 +50,7 @@ def clean_data(data):
     return data.replace(';','').strip()
 
 def get_all_playlist_paths():
-    return [file for file in os.listdir('data/') if file.endswith('.csv')]
+    return sorted([file for file in os.listdir('data/') if file.endswith('.csv')], key=str.lower)
 
 def flatten_genres(df):
     all_lists = df['genres']
