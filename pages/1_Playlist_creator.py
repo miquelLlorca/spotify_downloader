@@ -8,7 +8,7 @@ from spotipy.oauth2 import SpotifyOAuth
 
 PLAYLIST = 'Personal playlist'
 ALBUM = 'Album'
-
+ARTIST = 'Artist'
 
 def get_spotify_credentials():
     ''' Loads spotify credentials. Returns [id, secret]'''
@@ -114,6 +114,27 @@ def get_data(source, sp, playlist_id, filename):
     elif(source==ALBUM):
         return get_album_data(sp, playlist_id, filename)
 
+
+
+
+
+
+
+
+def get_artist_albums(sp, artist_id):
+    albums = {}
+    # Get albums, singles, and EPs
+    for album_type in ['album', 'single', 'appears_on', 'compilation']:
+        results = sp.artist_albums(artist_id, album_type=album_type)
+        while results:
+            for album in results['items']:
+                albums[album['id']] = {
+                    'name': album['name'],
+                    'release_date': album['release_date'],
+                    'total_tracks': album['total_tracks']
+                }
+            results = sp.next(results) if results['next'] else None
+    return albums
 #####################################################################################################################################################
 #####################################################################################################################################################
 #####################################################################################################################################################
@@ -124,49 +145,71 @@ if(__name__=="__main__"):
     st.set_page_config(layout="wide")
     st.title("Playlist creator")
     st.text('Here you can get the data from any playlist on spotify, you can also update already downloaded playlists.')
-    
-    source = st.selectbox(label='source', options=[PLAYLIST, ALBUM])
-    playlist_id = st.text_input('playlist_id', value="6cR4y6y6ExPNk93BodOG56")
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
+        client_id=CLIENT_ID,
+        client_secret=CLIENT_SECRET,
+        redirect_uri="http://localhost:8888/callback",
+        scope="playlist-read-private playlist-read-collaborative"
+    ))
+
+    source = st.selectbox(label='source', options=[PLAYLIST, ALBUM, ARTIST])
+    spotify_id = st.text_input('playlist_id', value="6cR4y6y6ExPNk93BodOG56")
     playlist_name = st.text_input('playlist_name', value="techno_flow_state" )
     df = st.session_state.get('df')
 
-    filename = f'{playlist_name}-{playlist_id}.csv'
+    filename = f'{playlist_name}-{spotify_id}.csv'
     path = f'data/{filename}'
     
-    if(st.button('Create or update playlist')):
-        sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
-            client_id=CLIENT_ID,
-            client_secret=CLIENT_SECRET,
-            redirect_uri="http://localhost:8888/callback",
-            scope="playlist-read-private playlist-read-collaborative"
-        ))
+    if(source in [PLAYLIST, ALBUM]):
+        if(st.button('Create or update playlist')):
+            if(os.path.exists(path)):
 
-        if(os.path.exists(path)):
-            st.text('Updating playlist data...')
-            data.create_playlist_backup(path)
-            df = data.read_as_df(path)
-            updated_df = get_data(source, sp, playlist_id, filename)
+                st.text('Updating playlist data...')
+                data.create_playlist_backup(path)
+                df = data.read_as_df(path)
+                updated_df = get_data(source, sp, spotify_id, filename)
 
-            # Prepares data for merge
-            df.drop(columns=['genres', 'name', 'artist', 'album', 'popularity'], errors='ignore', inplace=True)
-            updated_df['popularity'] = updated_df['popularity'].astype(float)
-            df['release_date'] = df['release_date'].apply(data.correct_date_format)
-            df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce')
-            updated_df['release_date'] = updated_df['release_date'].apply(data.correct_date_format)
-            updated_df['release_date'] = pd.to_datetime(updated_df['release_date'], errors='coerce')
+                # Prepares data for merge
+                df.drop(columns=['genres', 'name', 'artist', 'album', 'popularity'], errors='ignore', inplace=True)
+                updated_df['popularity'] = updated_df['popularity'].astype(float)
+                df['release_date'] = df['release_date'].apply(data.correct_date_format)
+                df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce')
+                updated_df['release_date'] = updated_df['release_date'].apply(data.correct_date_format)
+                updated_df['release_date'] = pd.to_datetime(updated_df['release_date'], errors='coerce')
 
-            # Merges on left to make sure new data is added to df
-            df = pd.merge(updated_df, df, on=['release_date', 'duration_ms'], how='left')
-        else:
-            st.text('Creating new playlist...')
-            df = get_data(source, sp, playlist_id, filename)
-            # Prepares data for possible future merge
-            df['release_date'] = df['release_date'].apply(data.correct_date_format)
-            df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce')
-        st.session_state.df = df
+                # Merges on left to make sure new data is added to df
+                df = pd.merge(updated_df, df, on=['release_date', 'duration_ms'], how='left')
+            else:
+                st.text('Creating new playlist...')
+                df = get_data(source, sp, spotify_id, filename)
+                # Prepares data for possible future merge
+                df['release_date'] = df['release_date'].apply(data.correct_date_format)
+                df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce')
+            st.session_state.df = df
 
+    else: # ARTIST selected
+        if(st.button('Get Albums')):
+            st.session_state.albums = get_artist_albums(sp, spotify_id)
+        if(st.session_state.get('albums')):
+            selected_albums = {}
+            for album_id, album_data in st.session_state.albums.items():
+                selected_albums[album_id] = st.checkbox(
+                    f"{album_data['name']}  -   {album_data['total_tracks']} songs. {album_data['release_date']}", 
+                    key=album_id
+                )
+
+            if(any(selected_albums.values())):
+                st.text('Selected')
+                dfs = []
+                for album_id, selected in selected_albums.items():
+                    if selected:
+                        filename = f'{st.session_state.albums[album_id]}-{album_id}.csv'
+                        dfs.append(get_album_data(sp, album_id, filename))
+                st.session_state.df = pd.concat(dfs, ignore_index=True)
+            
 
     if(st.session_state.get('df') is not None):
+        df = st.session_state.get('df')
         if(len(df)>0):
             # If columns already exist they should be kept
             if('YouTube_Title' not in df.columns):
