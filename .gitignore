@@ -1,4 +1,5 @@
 data/backups/*
+data/spotify_raw/*
 *.jpg
 *.png
 .cache
