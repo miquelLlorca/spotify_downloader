@@ -7,7 +7,9 @@ from selenium.webdriver.support import expected_conditions as EC
 # from selenium.webdriver.firefox.options import Options
 # from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 
-
+import os
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
@@ -40,9 +42,9 @@ def create_youtube_playlist(path):
 
         for i, row in df.iterrows():
             query = str(row['name']) + ' ' + str(row['artist'])
-            print(f' # Searching for: {query}')
             # Locate the search bar
-            if(type(row['YouTube_Title'])!=str):
+            if(type(row['YouTube_Title'])!=str or row['YouTube_Title']==''):
+                print(f' # Searching for: {query}')
                 search_box = WebDriverWait(driver, 10).until(
                     EC.presence_of_element_located((By.NAME, "search_query"))
                 )
@@ -57,22 +59,22 @@ def create_youtube_playlist(path):
 
                 # Find the first organic result (skip ads)
                 organic_results = driver.find_elements(By.XPATH, "//ytd-video-renderer[not(ancestor::ytd-ad-slot)]")
-                if organic_results:
-                    first_video = organic_results[0]
-                    
-                    # Get the URL
-                    youtube_url = first_video.find_element(By.ID, "thumbnail").get_attribute("href")
-                    
-                    # Get the title
-                    youtube_title = first_video.find_element(By.XPATH, ".//a[@id='video-title']").text
-                    
-                    print(f"    First organic result title: {youtube_title}")
-                    print(f"    First organic result URL: {youtube_url}")
-                else:
-                    print(" No organic results found.")
+                youtube_url = None
+                youtube_title = None
+
+                for result in organic_results:
+                    url = result.find_element(By.ID, "thumbnail").get_attribute("href")
+                    # Check if URL is a video URL (not a playlist)
+                    if url and "watch?v=" in url and "list=" not in url:
+                        youtube_url = url
+                        youtube_title = result.find_element(By.XPATH, ".//a[@id='video-title']").text
+                        break  # stop at first valid video result
+                
+                print(f"    First organic result title: {youtube_title}")
+                print(f"    First organic result URL: {youtube_url}")
             else: 
                 youtube_title, youtube_url = row['YouTube_Title'], row['YouTube_URL']
-                print(' Already have the link.')
+                # print(' Already have the link.')
             print()
             youtube_titles.append(youtube_title)
             youtube_urls.append(youtube_url)

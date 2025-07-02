@@ -5,7 +5,7 @@ from yt_dlp import YoutubeDL
 import pandas as pd
 import argparse
 import data
-
+import os
 
 def download_playlist(path):
     downloaded_songs = []
@@ -16,8 +16,7 @@ def download_playlist(path):
 
 
     options = {
-        "format": "bestaudio",
-        "outtmpl": "/home/miquel/Downloads/%(title)s.%(ext)s",
+        "outtmpl": f"/home/miquel/Descargas/{os.path.basename(path).split('.')[0]}/%(title)s.%(ext)s",
         "progress_hooks": [progress_hook],
         "postprocessors": [
             {
