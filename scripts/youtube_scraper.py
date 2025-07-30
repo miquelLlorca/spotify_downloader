@@ -59,16 +59,9 @@ def create_youtube_playlist(path):
 
                 # Find the first organic result (skip ads)
                 organic_results = driver.find_elements(By.XPATH, "//ytd-video-renderer[not(ancestor::ytd-ad-slot)]")
-                youtube_url = None
-                youtube_title = None
-
-                for result in organic_results:
-                    url = result.find_element(By.ID, "thumbnail").get_attribute("href")
-                    # Check if URL is a video URL (not a playlist)
-                    if url and "watch?v=" in url and "list=" not in url:
-                        youtube_url = url
-                        youtube_title = result.find_element(By.XPATH, ".//a[@id='video-title']").text
-                        break  # stop at first valid video result
+                youtube_url = organic_results[0].find_element(By.ID, "thumbnail").get_attribute("href")
+                youtube_title = organic_results[0].find_element(By.XPATH, ".//a[@id='video-title']").text
+                      
                 
                 print(f"    First organic result title: {youtube_title}")
                 print(f"    First organic result URL: {youtube_url}")

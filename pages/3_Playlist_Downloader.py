@@ -31,6 +31,7 @@ if(__name__=='__main__'):
     if(st.button('Start downloading')):
         folder_path = f'/home/miquel/Descargas/{os.path.basename(path).split(".")[0]}'
         options = {
+            "noplaylist": True,
             "outtmpl": f"{folder_path}/%(title)s.%(ext)s",
             "progress_hooks": [progress_hook],
             "postprocessors": [
@@ -63,20 +64,22 @@ if(__name__=='__main__'):
 
     st.title('Download your playlist!')
     st.text('Once you have the full playlist converted you can download it to your computer.')
-   
-    files_to_zip = [os.path.join(folder_path, song) for song in os.path.listdir(folder_path)]
+    try:
+        files_to_zip = [os.path.join(folder_path, song) for song in os.path.listdir(folder_path)]
 
-    # Create zip in-memory
-    zip_buffer = io.BytesIO()
-    with zipfile.ZipFile(zip_buffer, "w") as zip_file:
-        for file_path in files_to_zip:
-            zip_file.write(file_path, os.path.basename(file_path))
-    zip_buffer.seek(0)
+        # Create zip in-memory
+        zip_buffer = io.BytesIO()
+        with zipfile.ZipFile(zip_buffer, "w") as zip_file:
+            for file_path in files_to_zip:
+                zip_file.write(file_path, os.path.basename(file_path))
+        zip_buffer.seek(0)
 
-    # Download button
-    st.download_button(
-        label="Download ZIP",
-        data=zip_buffer,
-        file_name="downloaded_video.zip",
-        mime="application/zip",
-    )
+        # Download button
+        st.download_button(
+            label="Download ZIP",
+            data=zip_buffer,
+            file_name="downloaded_video.zip",
+            mime="application/zip",
+        )
+    except:
+        st.text('Not available yet.')

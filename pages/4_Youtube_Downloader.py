@@ -15,6 +15,7 @@ if(__name__=='__main__'):
     st.text('Choose audio or video and leave the rest unchanged if you dont know what you are doing.')
 
     yt_dlt_options = {
+        "noplaylist": True,
         "cookiefile": "/home/miquel/Descargas/cookies.txt"
     }
 
