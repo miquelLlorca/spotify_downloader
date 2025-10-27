@@ -68,6 +68,7 @@ if(__name__=='__main__'):
 
         if(download_type==AUDIO):
             file_path = file_path.replace('webm', 'mp3')
+            file_path = file_path.replace('mp4', 'mp3')
 
 
         st.text('Video converted! Download it from below:')
