@@ -117,21 +117,18 @@ def get_data(source, sp, playlist_id, filename):
 
 
 
-
-
-
-
 def get_artist_albums(sp, artist_id):
     albums = {}
     # Get albums, singles, and EPs
     for album_type in ['album', 'single', 'appears_on', 'compilation']:
+        albums[album_type] = {}
         results = sp.artist_albums(artist_id, album_type=album_type)
         while results:
             for album in results['items']:
-                albums[album['id']] = {
+                albums[album_type][album['id']] = {
                     'name': album['name'],
                     'release_date': album['release_date'],
-                    'total_tracks': album['total_tracks']
+                    'total_tracks': album['total_tracks'],
                 }
             results = sp.next(results) if results['next'] else None
     return albums
@@ -190,20 +187,31 @@ if(__name__=="__main__"):
     else: # ARTIST selected
         if(st.button('Get Albums')):
             st.session_state.albums = get_artist_albums(sp, spotify_id)
+
         if(st.session_state.get('albums')):
             selected_albums = {}
-            for album_id, album_data in st.session_state.albums.items():
-                selected_albums[album_id] = st.checkbox(
-                    f"{album_data['name']}  -   {album_data['total_tracks']} songs. {album_data['release_date']}", 
-                    key=album_id
-                )
+            
+            for album_type, albums in st.session_state.albums.items():
+                if(len(albums)>0):
+                    st.text(album_type.upper())
+                    for album_id, album_data in albums.items():
+                        selected_albums[album_id] = st.checkbox(
+                            f"{album_data['name']}  -   {album_data['total_tracks']} songs. {album_data['release_date']}", 
+                            key=album_id
+                        )
 
             if(any(selected_albums.values())):
                 st.text('Selected')
                 dfs = []
+                albums = {}
+                for album_list in st.session_state.albums.values():
+                    albums = {**albums, **album_list}
+                
+
+                print(albums)
                 for album_id, selected in selected_albums.items():
                     if selected:
-                        filename = f'{st.session_state.albums[album_id]}-{album_id}.csv'
+                        filename = f'{albums[album_id]}-{album_id}.csv'
                         dfs.append(get_album_data(sp, album_id, filename))
                 st.session_state.df = pd.concat(dfs, ignore_index=True)
             
