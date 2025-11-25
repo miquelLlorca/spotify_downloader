@@ -8,9 +8,6 @@ if(__name__=='__main__'):
     st.title("Link extractor")
     st.text('Here you can get the links to the songs on your playlists.')
     st.text('This uses a scraper to search on Youtube, originally it used the Google API but it was very limited so that option has been removed.')
-
-    # https://console.cloud.google.com/apis/api/youtube.googleapis.com/quotas?inv=1&invt=AblV9w&project=youtube-music-search-446115&pageState=(%22allQuotasTable%22:(%22s%22:%5B(%22i%22:%22currentPercent%22,%22s%22:%221%22),(%22i%22:%22sevenDayPeakPercent%22,%22s%22:%220%22),(%22i%22:%22currentUsage%22,%22s%22:%221%22),(%22i%22:%22sevenDayPeakUsage%22,%22s%22:%220%22),(%22i%22:%22serviceTitle%22,%22s%22:%220%22),(%22i%22:%22displayName%22,%22s%22:%220%22),(%22i%22:%22displayDimensions%22,%22s%22:%220%22)%5D,%22f%22:%22%255B%255D%22))
-    api_key = 'AIzaSyCUc2-Xr3_OLVSt6Cga60hBmGS4N-hp6Ak'
     st.session_state.quota_exceeded = False
 
     # Get url
