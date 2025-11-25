@@ -76,9 +76,10 @@ def get_album_data(sp, album_id, filename):
         for track in tracks:
             artist_ids = [artist['id'] for artist in track['artists']]
             genres = []
-            for artist_id in artist_ids:
-                artist_info = sp.artist(artist_id)
-                genres.extend(artist_info.get('genres', []))
+            #! Removed genres due to spotify's API rate limit
+            # for artist_id in artist_ids:
+            #     artist_info = sp.artist(artist_id)
+            #     genres.extend(artist_info.get('genres', []))
 
             track_info = {
                 'name': track['name'],
